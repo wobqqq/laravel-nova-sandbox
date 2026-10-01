@@ -14,7 +14,7 @@ description: >-
 ## Where packages come from
 
 - The parent folder is mounted at `/var/www/portfolio`, this project at
-  `/var/www/portfolio/nova-sandbox`, so `../package` means the same inside the
+  `/var/www/portfolio/laravel-nova-sandbox`, so `../package` means the same inside the
   container and on the host.
 - `composer.json` has the `local` path repository over `../*` with
   `symlink: true`: the package's working copy is linked into `vendor/`, and an

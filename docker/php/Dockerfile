@@ -38,6 +38,6 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 USER www-data
 
-WORKDIR /var/www/portfolio/nova-sandbox
+WORKDIR /var/www/portfolio/laravel-nova-sandbox
 
 CMD ["php-fpm"]

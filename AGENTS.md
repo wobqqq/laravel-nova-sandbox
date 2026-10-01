@@ -22,7 +22,7 @@ PHPStan runs at `level: max` with Larastan and the strict rules and no baseline:
 
 ## Installing a package under test
 
-- The parent folder is mounted at `/var/www/portfolio`; the project is `/var/www/portfolio/nova-sandbox`. The `local` path repository (`../*`, symlinked) offers every sibling folder.
+- The parent folder is mounted at `/var/www/portfolio`; the project is `/var/www/portfolio/laravel-nova-sandbox`. The `local` path repository (`../*`, symlinked) offers every sibling folder.
 - `make package.require PACKAGE=vendor/name` / `make package.remove PACKAGE=vendor/name`; `make packages.aegis` for the Aegis core and modules.
 - Do not commit a package under test into `composer.json` / `composer.lock` unless asked; restore them with `git checkout composer.json composer.lock && make install`.
 - Read the `nova-packages` skill.

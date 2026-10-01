@@ -1,5 +1,5 @@
 {
-    "name": "wobqqq/nova-sandbox",
+    "name": "wobqqq/laravel-nova-sandbox",
     "description": "A clean Laravel Nova application for installing and testing Nova packages",
     "license": "MIT",
     "type": "project",
