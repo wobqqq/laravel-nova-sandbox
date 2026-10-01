@@ -33,7 +33,7 @@ final readonly class LocalPackages
     }
 
     /**
-     * @return list<array{name: string, path: string}>
+     * @return list<LocalPackage>
      */
     public function all(): array
     {
@@ -47,10 +47,10 @@ final readonly class LocalPackages
                 continue;
             }
 
-            $packages[] = ['name' => $name, 'path' => $real];
+            $packages[] = new LocalPackage($name, $real);
         }
 
-        usort($packages, fn (array $a, array $b): int => $a['name'] <=> $b['name']);
+        usort($packages, static fn (LocalPackage $a, LocalPackage $b): int => $a->name <=> $b->name);
 
         return $packages;
     }

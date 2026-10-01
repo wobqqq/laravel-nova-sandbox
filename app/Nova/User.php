@@ -6,16 +6,18 @@ namespace App\Nova;
 
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Override;
 
 /**
  * @extends Resource<\App\Models\User>
  */
-class User extends Resource
+final class User extends Resource
 {
     /**
      * @var class-string<\App\Models\User>
@@ -35,8 +37,9 @@ class User extends Resource
     ];
 
     /**
-     * @return array<int, \Laravel\Nova\Fields\Field>
+     * @return list<Field>
      */
+    #[Override]
     public function fields(NovaRequest $request): array
     {
         return [

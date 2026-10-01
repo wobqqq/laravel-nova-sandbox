@@ -1,6 +1,11 @@
 <?php
 
 declare(strict_types=1);
+use Illuminate\Http\Middleware\CheckResponseForModifications;
+use Laravel\Nova\Actions\ActionResource;
+use Laravel\Nova\Http\Middleware\Authenticate;
+use Laravel\Nova\Http\Middleware\Authorize;
+use Laravel\Nova\Http\Middleware\HandleInertiaRequests;
 
 return [
 
@@ -95,21 +100,21 @@ return [
 
     'middleware' => [
         'web',
-        Laravel\Nova\Http\Middleware\HandleInertiaRequests::class,
+        HandleInertiaRequests::class,
         'nova:serving',
     ],
 
     'api_middleware' => [
         'nova',
-        Laravel\Nova\Http\Middleware\Authenticate::class,
+        Authenticate::class,
         // \Laravel\Nova\Http\Middleware\AuthenticateSession::class,
         // \Laravel\Nova\Http\Middleware\EnsureEmailIsVerified::class,
-        Laravel\Nova\Http\Middleware\Authorize::class,
+        Authorize::class,
     ],
 
     'asset_middleware' => [
         'nova:api',
-        Illuminate\Http\Middleware\CheckResponseForModifications::class,
+        CheckResponseForModifications::class,
     ],
 
     /*
@@ -185,7 +190,7 @@ return [
     */
 
     'actions' => [
-        'resource' => Laravel\Nova\Actions\ActionResource::class,
+        'resource' => ActionResource::class,
     ],
 
     /*

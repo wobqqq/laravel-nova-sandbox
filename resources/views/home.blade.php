@@ -22,7 +22,7 @@
     @else
         <ul>
             @foreach ($packages as $package)
-                <li>{{ $package['name'] }}</li>
+                <li>{{ $package->name }}</li>
             @endforeach
         </ul>
     @endif
