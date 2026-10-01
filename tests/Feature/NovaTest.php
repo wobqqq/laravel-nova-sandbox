@@ -13,23 +13,23 @@ use function Pest\Laravel\post;
 
 it('sends a guest to the Nova sign-in page', function (): void {
     get(Nova::path())->assertRedirect(Nova::url('/login'));
-});
+})->group('nova');
 
 it('shows the Nova sign-in page', function (): void {
     get(Nova::url('/login'))->assertOk();
-});
+})->group('nova');
 
 it('lets an administrator into Nova', function (): void {
     actingAs(User::factory()->admin()->create())
         ->get(Nova::url('/dashboards/main'))
         ->assertOk();
-});
+})->group('nova');
 
 it('keeps a user who is not an administrator out of Nova', function (): void {
     actingAs(User::factory()->create())
         ->get(Nova::url('/dashboards/main'))
         ->assertForbidden();
-});
+})->group('nova');
 
 it('grants viewNova to administrators only', function (): void {
     expect(Gate::forUser(User::factory()->admin()->create())->allows('viewNova'))->toBeTrue()
@@ -43,14 +43,14 @@ it('signs an administrator in through Nova', function (): void {
         ->assertRedirect();
 
     assertAuthenticatedAs($user);
-});
+})->group('nova');
 
 it('serves the dashboard cards to an administrator', function (): void {
     actingAs(User::factory()->admin()->create())
         ->getJson('/nova-api/dashboards/main')
         ->assertOk()
         ->assertJsonPath('cards.0.component', 'help-card');
-});
+})->group('nova');
 
 it('lists the users in the Nova resource', function (): void {
     $admin = User::factory()->admin()->create();
@@ -59,4 +59,4 @@ it('lists the users in the Nova resource', function (): void {
         ->getJson('/nova-api/users')
         ->assertOk()
         ->assertJsonPath('resources.0.id.value', $admin->id);
-});
+})->group('nova');

@@ -69,6 +69,7 @@ make code.fix        # composer normalize, Rector, php-cs-fixer
 make code.check      # composer validate and audit, php-cs-fixer, Rector, PHPStan (max)
 make test            # Pest
 make test.coverage   # Pest with coverage, at least 90 %
+make test.stub       # what CI runs: a copy on the Nova test double, without the license
 make ready           # all of the above
 ```
 
@@ -76,7 +77,7 @@ The tests run against the `sandbox_test` MySQL database inside the PHP container
 
 ## Continuous integration
 
-GitHub Actions run the static checks and the tests on every pull request and on `main`, with a MySQL service. Nova comes from its licensed registry, so the PHP job needs the repository secrets `NOVA_USERNAME` and `NOVA_LICENSE_KEY` (the same values as in `auth.json`); without them it is skipped with a notice and only the syntax and workflow checks run. A weekly job audits the locked dependencies, and a `vX.Y.Z` tag on `main` with a matching CHANGELOG entry publishes a GitHub release once CI passes.
+GitHub Actions run the static checks and the tests on every pull request and on `main`, with a MySQL service and no Nova license: `bin/use-nova-stub` swaps Nova for the test double in `stubs/nova` (Nova's public signatures, no Nova code) and the tests that need the real Nova, tagged `nova`, are left out. Locally everything runs on the real Nova; `make test.stub` reproduces the CI run. A weekly job audits the locked dependencies, and a `vX.Y.Z` tag on `main` with a matching CHANGELOG entry publishes a GitHub release once CI passes.
 
 ## Other commands
 

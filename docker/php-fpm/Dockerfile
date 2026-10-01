@@ -24,7 +24,7 @@ RUN apk add --no-cache \
     && apk del .build-deps \
     && rm -rf /tmp/* /var/cache/apk/*
 
-COPY docker/php/php.ini /usr/local/etc/php/conf.d/zz-sandbox.ini
+COPY docker/php-fpm/php.ini /usr/local/etc/php/conf.d/zz-sandbox.ini
 
 ARG UID=1000
 ARG GID=1000

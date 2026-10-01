@@ -129,6 +129,14 @@
         "test.coverage": [
             "@php artisan config:clear --ansi",
             "@php vendor/bin/pest --coverage --min=90"
+        ],
+        "test.stub": [
+            "@php artisan config:clear --ansi",
+            "@php vendor/bin/pest --exclude-group=nova"
+        ],
+        "test.stub.coverage": [
+            "@php artisan config:clear --ansi",
+            "@php -d pcov.directory=app vendor/bin/pest --exclude-group=nova --coverage --min=90"
         ]
     },
     "$schema": "https://getcomposer.org/schema.json"

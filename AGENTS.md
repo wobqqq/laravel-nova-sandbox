@@ -8,13 +8,14 @@ A clean Laravel 13 application with Nova 5.9.3 (PHP 8.5, Docker) for installing 
 
 ## The gate (run before every commit)
 
-Everything runs in the `php` container; the host needs only Docker and `make`.
+Everything runs in the `php-fpm` container; the host needs only Docker and `make`.
 
 ```bash
 make code.fix        # composer normalize, Rector, php-cs-fixer
 make code.check      # validate, audit, php-cs-fixer, Rector, PHPStan max
 make test            # Pest on the sandbox_test MySQL database
 make test.coverage   # fails below 90 %
+make test.stub       # CI's run: the Nova test double, no license
 make ready           # all of the above
 ```
 

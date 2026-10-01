@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   php:
-    name: PHP checks and tests
+    name: PHP checks and tests on the Nova test double
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     services:
@@ -34,48 +34,30 @@ jobs:
     env:
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
-      DB_PASSWORD: 'secret'
-      LICENSE_USERNAME: ${{ secrets.NOVA_USERNAME }}
-      LICENSE_KEY: ${{ secrets.NOVA_LICENSE_KEY }}
+      DB_PASSWORD: secret
     steps:
-      - name: Nova license
-        id: license
-        run: |
-          if [ -z "$LICENSE_USERNAME" ] || [ -z "$LICENSE_KEY" ]; then
-            echo "::notice::Skipping the PHP job: add the NOVA_USERNAME and NOVA_LICENSE_KEY secrets to install Nova."
-            echo "available=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "available=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        if: steps.license.outputs.available == 'true'
         with:
           persist-credentials: false
 
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
-        if: steps.license.outputs.available == 'true'
         with:
           php-version: '8.5'
           extensions: dom, intl, mbstring, pdo_mysql, redis
           coverage: pcov
           tools: none
 
-      - name: Install the dependencies
-        if: steps.license.outputs.available == 'true'
+      - name: Install the dependencies with the Nova test double
         run: |
           cp .env.example .env
-          composer config --auth http-basic.nova.laravel.com "$LICENSE_USERNAME" "$LICENSE_KEY"
-          composer install --no-interaction --no-progress --prefer-dist
+          bin/use-nova-stub
           php artisan key:generate --ansi
 
       - name: Static analysis and style
-        if: steps.license.outputs.available == 'true'
         run: composer code.check
 
       - name: Tests with coverage
-        if: steps.license.outputs.available == 'true'
-        run: composer test.coverage
+        run: composer test.stub.coverage
 
   syntax:
     name: PHP syntax
