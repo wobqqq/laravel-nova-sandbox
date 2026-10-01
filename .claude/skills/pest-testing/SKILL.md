@@ -8,7 +8,7 @@ description: >-
 
 # Tests
 
-- Pest 5 on PHPUnit 13. `make test` runs the suite inside the `php`
+- Pest 5 on PHPUnit 13. `make test` runs the suite inside the `php-fpm`
   container, `make test.coverage` fails below 90 % (pcov).
 - Feature tests use `RefreshDatabase` on the `sandbox_test` MySQL database
   (created by `docker/mysql/create-test-database.sql`); unit tests touch no

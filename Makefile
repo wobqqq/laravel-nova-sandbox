@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-PHP := docker compose exec -T php
+PHP := docker compose exec -T php-fpm
 AEGIS := wobqqq/nova-aegis wobqqq/nova-aegis-admin-ip-access wobqqq/nova-aegis-ip-blocker \
 	wobqqq/nova-aegis-smart-ip-blocker wobqqq/nova-aegis-csp wobqqq/nova-aegis-input-sanitizer
 
@@ -18,11 +18,11 @@ docker.down: ## Stop the containers
 	docker compose down
 
 docker.rebuild: ## Rebuild the PHP image and restart
-	docker compose build --pull php
+	docker compose build --pull php-fpm
 	docker compose up -d --force-recreate
 
 shell: ## Open a shell in the PHP container
-	docker compose exec php sh
+	docker compose exec php-fpm sh
 
 install: ## Install the composer dependencies
 	$(PHP) composer install
