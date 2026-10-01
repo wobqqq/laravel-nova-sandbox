@@ -8,6 +8,7 @@ All notable changes are documented here. The format follows [Keep a Changelog](h
 
 - CI needs no Nova license: it runs on a test double of Nova (`stubs/nova`) and leaves out the tests tagged `nova`; `make test.stub` runs the same locally.
 - The PHP service is `php-fpm`, with its files in `docker/php-fpm`.
+- Stricter typing: PHPStan on bleeding edge with the shipmonk rules, `#[\Override]`, final classes and a `LocalPackage` value object. No behaviour change.
 
 ## [1.0.0] - 2026-10-01
 
