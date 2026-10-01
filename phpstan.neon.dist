@@ -1,5 +1,11 @@
+includes:
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+
 parameters:
     level: max
+    phpVersion:
+        min: 80400
+        max: 80599
     paths:
         - app/
         - bootstrap/app.php
@@ -8,3 +14,21 @@ parameters:
         - routes/
         - tests/
     tmpDir: storage/framework/cache/phpstan
+    treatPhpDocTypesAsCertain: false
+    checkMissingOverrideMethodAttribute: true
+    checkUninitializedProperties: true
+    checkImplicitMixed: true
+    checkBenevolentUnionTypes: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    reportAnyTypeWideningInVarTag: true
+    reportPossiblyNonexistentConstantArrayOffset: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    reportUnmatchedIgnoredErrors: true
+    reportWrongPhpDocTypeInVarTag: true
+    shipmonkRules:
+        forbidCheckedExceptionInCallable:
+            enabled: false
+    ignoreErrors:
+        -
+            identifier: method.internalClass
+            path: tests/*
