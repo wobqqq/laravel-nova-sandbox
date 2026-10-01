@@ -1,0 +1,11 @@
+#!/bin/sh
+# Swaps the licensed Nova for the test double in stubs/nova; CI only, never commit the result.
+set -eu
+cd "$(dirname "$0")/.."
+
+composer config --unset repositories.nova
+composer config repositories.nova-stub '{"type": "path", "url": "stubs/nova", "options": {"symlink": false, "versions": {"laravel/nova": "5.9.3"}}}'
+composer update laravel/nova --no-interaction --no-progress --no-scripts
+composer normalize --no-update-lock --no-interaction
+composer update --lock --no-interaction --no-progress --no-scripts
+php artisan package:discover --ansi
