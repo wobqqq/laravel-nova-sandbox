@@ -77,7 +77,7 @@ The tests run against the `sandbox_test` MySQL database inside the PHP container
 
 ## Continuous integration
 
-GitHub Actions run the static checks and the tests on every pull request and on `main`, with a MySQL service and no Nova license: `bin/use-nova-stub` swaps Nova for the test double in `stubs/nova` (Nova's public signatures, no Nova code) and the tests that need the real Nova, tagged `nova`, are left out. Locally everything runs on the real Nova; `make test.stub` reproduces the CI run. A weekly job audits the locked dependencies, and a `vX.Y.Z` tag on `main` with a matching CHANGELOG entry publishes a GitHub release once CI passes.
+GitHub Actions run the static checks and the tests on every pull request and on `main`, with a MySQL service and no Nova license: `bin/use-nova-stub` swaps Nova for the test double in `stubs/nova` (Nova's public signatures, no Nova code) and the tests that need the real Nova, tagged `nova`, are left out. Locally everything runs on the real Nova; `make test.stub` reproduces the CI run. An audit workflow checks the locked dependencies when run by hand from the Actions tab, and a `vX.Y.Z` tag on `main` with a matching CHANGELOG entry publishes a GitHub release once CI passes.
 
 ## Other commands
 
