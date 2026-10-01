@@ -296,6 +296,9 @@ while ($queue !== []) {
         $queue[] = $r->getName();
         continue;
     }
+    if (! str_contains(str_replace('\\', '/', (string) $r->getFileName()), '/laravel/nova/src/')) {
+        continue;
+    }
     $done[$name] = true;
     $refs = [];
     if ($r->getParentClass() !== false) {
