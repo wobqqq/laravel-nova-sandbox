@@ -1,0 +1,135 @@
+{
+    "name": "wobqqq/laravel-nova-sandbox",
+    "description": "A clean Laravel Nova application for installing and testing Nova packages",
+    "license": "MIT",
+    "type": "project",
+    "keywords": [
+        "laravel",
+        "nova",
+        "sandbox"
+    ],
+    "authors": [
+        {
+            "name": "Sergey Zakharevich",
+            "homepage": "https://github.com/wobqqq"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "laravel/framework": "^13.34",
+        "laravel/nova": "5.9.3",
+        "laravel/tinker": "^3.0"
+    },
+    "require-dev": {
+        "driftingly/rector-laravel": "^2.6",
+        "ergebnis/composer-normalize": "^2.48",
+        "fakerphp/faker": "^1.24",
+        "friendsofphp/php-cs-fixer": "^3.88",
+        "larastan/larastan": "^3.12",
+        "laravel/nova-devtool": "^1.10",
+        "laravel/pail": "^1.2",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.9",
+        "pestphp/pest": "^5.2",
+        "pestphp/pest-plugin-laravel": "^5.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "rector/rector": "^2.5"
+    },
+    "repositories": {
+        "nova": {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        },
+        "local": {
+            "options": {
+                "symlink": true
+            },
+            "type": "path",
+            "url": "../*"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "process-timeout": 600,
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php artisan nova:publish --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan nova:publish --ansi"
+        ],
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "code.check": [
+            "@composer validate --strict --no-check-all",
+            "@composer normalize --dry-run",
+            "@composer audit --abandoned=report",
+            "@code.cs.check",
+            "@code.rector.check",
+            "@code.stan"
+        ],
+        "code.cs.check": "php-cs-fixer fix --diff --dry-run",
+        "code.cs.fix": "php-cs-fixer fix --diff",
+        "code.fix": [
+            "@composer normalize --no-update-lock",
+            "@code.rector.fix",
+            "@code.cs.fix"
+        ],
+        "code.rector.check": "rector process --dry-run",
+        "code.rector.fix": "rector process",
+        "code.stan": "phpstan analyse --memory-limit=1G",
+        "ready": [
+            "@code.fix",
+            "@code.check",
+            "@test.coverage"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php vendor/bin/pest"
+        ],
+        "test.coverage": [
+            "@php artisan config:clear --ansi",
+            "@php vendor/bin/pest --coverage --min=90"
+        ]
+    },
+    "$schema": "https://getcomposer.org/schema.json"
+}
