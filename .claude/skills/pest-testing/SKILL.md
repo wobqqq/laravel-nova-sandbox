@@ -23,4 +23,7 @@ description: >-
 - Error pages are tested through throwaway routes registered in the test
   (`Route::get('/_test/...')`); `APP_DEBUG` is false in `phpunit.xml`, so the
   real error views render.
+- A test that needs the real Nova (its routes, `nova-api`, Inertia pages) gets
+  `->group('nova')`: CI runs on the test double in `stubs/nova` and leaves that
+  group out (`make test.stub`). Everything else must pass on both.
 - Name tests after the behaviour: `it('keeps a user who is not an administrator out of Nova')`.

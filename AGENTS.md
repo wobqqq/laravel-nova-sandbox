@@ -15,6 +15,7 @@ make code.fix        # composer normalize, Rector, php-cs-fixer
 make code.check      # validate, audit, php-cs-fixer, Rector, PHPStan max
 make test            # Pest on the sandbox_test MySQL database
 make test.coverage   # fails below 90 %
+make test.stub       # CI's run: the Nova test double, no license
 make ready           # all of the above
 ```
 
