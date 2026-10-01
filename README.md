@@ -39,7 +39,7 @@ Change the ports in `.env` (`APP_PORT`, `DB_FORWARD_PORT`, `REDIS_FORWARD_PORT`,
 
 ## Installing a local package
 
-The containers mount the parent folder at `/var/www/portfolio`, with this project at `/var/www/portfolio/nova-sandbox`, so the relative paths are the same inside Docker and on the host. `composer.json` has a path repository over every sibling folder (`../*`), symlinked, so a package's working copy is installed as it is and every change to it shows up at once.
+The containers mount the parent folder at `/var/www/portfolio`, with this project at `/var/www/portfolio/laravel-nova-sandbox`, so the relative paths are the same inside Docker and on the host. `composer.json` has a path repository over every sibling folder (`../*`), symlinked, so a package's working copy is installed as it is and every change to it shows up at once.
 
 ```bash
 make package.require PACKAGE=vendor/package   # composer require vendor/package:*@dev, then migrate
@@ -72,7 +72,11 @@ make test.coverage   # Pest with coverage, at least 90 %
 make ready           # all of the above
 ```
 
-The tests run against the `sandbox_test` MySQL database inside the PHP container. There is no CI: Nova cannot be installed without the license.
+The tests run against the `sandbox_test` MySQL database inside the PHP container.
+
+## Continuous integration
+
+GitHub Actions run the static checks and the tests on every pull request and on `main`, with a MySQL service. Nova comes from its licensed registry, so the PHP job needs the repository secrets `NOVA_USERNAME` and `NOVA_LICENSE_KEY` (the same values as in `auth.json`); without them it is skipped with a notice and only the syntax and workflow checks run. A weekly job audits the locked dependencies, and a `vX.Y.Z` tag on `main` with a matching CHANGELOG entry publishes a GitHub release once CI passes.
 
 ## Other commands
 
