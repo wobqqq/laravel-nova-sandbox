@@ -10,7 +10,7 @@ use Laravel\Nova\Nova;
 
 final class HomeController
 {
-    public function __invoke(): View
+    public function __invoke(LocalPackages $localPackages): View
     {
         return view('home', [
             'versions' => [
@@ -18,7 +18,7 @@ final class HomeController
                 'Laravel' => app()->version(),
                 'Nova' => Nova::version(),
             ],
-            'packages' => LocalPackages::fromComposer()->all(),
+            'packages' => $localPackages->all(),
             'novaUrl' => url(Nova::path()),
         ]);
     }

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Support\LocalPackage;
 use App\Support\LocalPackages;
 use Illuminate\Support\Facades\File;
 
@@ -37,14 +38,14 @@ it('keeps only the packages whose code lives outside vendor, by name', function 
         'acme/gone' => "{$root}/vendor/acme/gone",
     ], "{$root}/vendor");
 
-    expect($packages->all())->toBe([
-        ['name' => 'acme/alpha', 'path' => "{$root}/packages/alpha"],
-        ['name' => 'acme/zeta', 'path' => "{$root}/packages/zeta"],
+    expect($packages->all())->toEqual([
+        new LocalPackage('acme/alpha', "{$root}/packages/alpha"),
+        new LocalPackage('acme/zeta', "{$root}/packages/zeta"),
     ]);
 });
 
 it('reads the installed packages from composer', function (): void {
-    $names = array_column(LocalPackages::fromComposer()->all(), 'name');
+    $names = array_map(static fn (LocalPackage $package): string => $package->name, LocalPackages::fromComposer()->all());
 
     expect($names)->not->toContain('laravel/framework', 'laravel/nova');
 });

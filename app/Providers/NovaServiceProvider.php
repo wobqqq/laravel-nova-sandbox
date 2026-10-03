@@ -8,19 +8,24 @@ use App\Models\User;
 use App\Nova\Dashboards\Main;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Fortify\Features;
+use Laravel\Nova\Dashboard;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Laravel\Nova\Tool;
+use Override;
 
-class NovaServiceProvider extends NovaApplicationServiceProvider
+final class NovaServiceProvider extends NovaApplicationServiceProvider
 {
     /**
-     * @return array<int, \Laravel\Nova\Tool>
+     * @return list<Tool>
      */
+    #[Override]
     public function tools(): array
     {
         return [];
     }
 
+    #[Override]
     protected function fortify(): void
     {
         Nova::fortify()
@@ -30,6 +35,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->register();
     }
 
+    #[Override]
     protected function routes(): void
     {
         Nova::routes()
@@ -42,14 +48,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Nova lets any signed-in user in locally; everywhere else only administrators.
      */
+    #[Override]
     protected function gate(): void
     {
         Gate::define('viewNova', fn (User $user): bool => $user->is_admin);
     }
 
     /**
-     * @return array<int, \Laravel\Nova\Dashboard>
+     * @return list<Dashboard>
      */
+    #[Override]
     protected function dashboards(): array
     {
         return [

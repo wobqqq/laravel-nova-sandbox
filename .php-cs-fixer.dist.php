@@ -1,8 +1,10 @@
 <?php
 
 declare(strict_types=1);
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
 
-$finder = PhpCsFixer\Finder::create()
+$finder = Finder::create()
     ->in([
         __DIR__ . '/app',
         __DIR__ . '/config',
@@ -18,11 +20,20 @@ $finder = PhpCsFixer\Finder::create()
         __FILE__,
     ]);
 
-return new PhpCsFixer\Config()
+return new Config()
     ->setFinder($finder)
     ->setRules([
         '@PSR12' => true,
-        '@PHP84Migration' => true,
+        '@PHP8x4Migration' => true,
+        '@PHP8x4Migration:risky' => true,
+        'final_class' => true,
+        'strict_comparison' => true,
+        'strict_param' => true,
+        'void_return' => true,
+        'use_arrow_functions' => true,
+        'phpdoc_to_return_type' => true,
+        'nullable_type_declaration_for_default_null_value' => true,
+        'global_namespace_import' => ['import_classes' => true, 'import_constants' => false, 'import_functions' => false],
         'blank_line_after_opening_tag' => true,
         'braces_position' => [
             'allow_single_line_empty_anonymous_classes' => true,
@@ -35,7 +46,7 @@ return new PhpCsFixer\Config()
         'declare_strict_types' => true,
         'lowercase_cast' => true,
         'lowercase_static_reference' => true,
-        'new_with_braces' => true,
+        'new_with_parentheses' => true,
         'no_blank_lines_after_class_opening' => true,
         'no_leading_import_slash' => true,
         'no_whitespace_in_blank_line' => true,
@@ -71,7 +82,7 @@ return new PhpCsFixer\Config()
         'concat_space' => [
             'spacing' => 'one',
         ],
-        'fully_qualified_strict_types' => true,
+        'fully_qualified_strict_types' => ['import_symbols' => true],
         'method_argument_space' => true,
         'native_function_invocation' => [
             'include' => [],
@@ -103,7 +114,8 @@ return new PhpCsFixer\Config()
         'align_multiline_comment' => true,
         'no_empty_phpdoc' => true,
         'no_superfluous_phpdoc_tags' => [
-            'allow_mixed' => true,
+            'allow_mixed' => false,
+            'allow_unused_params' => false,
             'remove_inheritdoc' => true,
         ],
         'phpdoc_align' => [
