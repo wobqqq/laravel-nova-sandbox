@@ -31,3 +31,7 @@ arch('application classes are final', function (): void {
 arch('value objects are readonly', function (): void {
     expect('App\Support')->toBeReadonly();
 });
+
+arch('support classes get their collaborators injected, not from facades', function (): void {
+    expect('App\Support')->not->toUse('Illuminate\Support\Facades');
+});
